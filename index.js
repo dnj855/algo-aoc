@@ -2,21 +2,25 @@ import { readFileSync } from "fs";
 
 const test = readFileSync("test.txt", "utf8").split(",");
 const final = readFileSync("final.txt", "utf8").split(",");
-const DAY_AMOUNT = 80;
-let updated = final;
-
-for (let i = 0; i < DAY_AMOUNT; i++) {
-  let newFish = [];
-  updated = updated.map((item) => {
-    let fishAge = Number(item);
-    if (fishAge <= 8 && fishAge > 0) {
-      return fishAge - 1;
-    } else if (fishAge === 0) {
-      newFish.push(8);
-      return 6;
+const DAYS = 80;
+const new_day = (fish) => {
+  const staticLength = fish.length;
+  for (let i = 0; i < staticLength; i++) {
+    if (fish[i] === 0) {
+      fish[i] = 6;
+      fish.push(8);
+    } else {
+      fish[i] = fish[i] - 1;
     }
-  });
-  updated = [...updated, ...newFish];
-}
+  }
+};
 
-console.log(updated.length);
+const part1 = (datas) => {
+  const fish = datas.split(",").map(Number);
+
+  for (let day = 1; day <= DAYS; day++) {
+    new_day(fish);
+  }
+
+  return fish.length;
+};
