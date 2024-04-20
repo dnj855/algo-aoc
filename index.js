@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 const test = readFileSync("test.txt", "utf8").split(",");
 const final = readFileSync("final.txt", "utf8").split(",");
 const DAYS = 80;
+
 const new_day = (fish) => {
   const staticLength = fish.length;
   for (let i = 0; i < staticLength; i++) {
@@ -16,7 +17,7 @@ const new_day = (fish) => {
 };
 
 const part1 = (datas) => {
-  const fish = datas.split(",").map(Number);
+  const fish = datas.map(Number);
 
   for (let day = 1; day <= DAYS; day++) {
     new_day(fish);
@@ -24,3 +25,5 @@ const part1 = (datas) => {
 
   return fish.length;
 };
+
+console.log(part1(final));
