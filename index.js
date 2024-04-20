@@ -1,27 +1,26 @@
 import { readFileSync } from "fs";
 
-const test = readFileSync("test.txt", "utf8").split(",");
-const final = readFileSync("final.txt", "utf8").split(",");
-const DAY_AMOUNT = 18;
+const test = readFileSync("test.txt", "utf8");
+const final = readFileSync("final.txt", "utf8");
 
-// Initialisation du tableau qui contiendra les fishs par âge
-const initialisation = (datas) => {
-  if (typeof datas !== "object") {
-    throw new Error("Invalid dataset : you must provide an array.");
+const part1 = (data) => {
+  const DAY_AMOUNT = 80;
+  let updated = data.split(",");
+
+  for (let i = 0; i < DAY_AMOUNT; i++) {
+    let newFish = [];
+    updated = updated.map((item) => {
+      let fishAge = Number(item);
+      if (fishAge <= 8 && fishAge > 0) {
+        return fishAge - 1;
+      } else if (fishAge === 0) {
+        newFish.push(8);
+        return 6;
+      }
+    });
+    updated = [...updated, ...newFish];
   }
-  const fishAges = new Array(9).fill(0);
-  for (let i = 0; i < datas.length; i++) {
-    let index = Number(datas[i]);
-    fishAges[index]++;
-  }
-  return fishAges;
+  return updated.length;
 };
 
-const iteration = (data) => {
-  let datas = initialisation(data);
-  for (let day = 1; day < DAY_AMOUNT; day++) {
-    for (let i = 8; i <= 0; i--) {}
-  }
-};
-
-iteration(test);
+console.log(part1(final));
