@@ -4,26 +4,19 @@ const test = readFileSync("test.txt", "utf8").split(",");
 const final = readFileSync("final.txt", "utf8").split(",");
 const DAYS = 80;
 
-const new_day = (fish) => {
-  const staticLength = fish.length;
-  for (let i = 0; i < staticLength; i++) {
-    if (fish[i] === 0) {
-      fish[i] = 6;
-      fish.push(8);
-    } else {
-      fish[i] = fish[i] - 1;
-    }
-  }
-};
-
-const part1 = (datas) => {
-  const fish = datas.map(Number);
+const part2 = (datas) => {
+  const fish = datas.reduce((acc, curr) => {
+    acc[curr] = acc[curr] + 1;
+    return acc;
+  }, new Array(9).fill(0));
 
   for (let day = 1; day <= DAYS; day++) {
-    new_day(fish);
+    const fish0 = fish.shift();
+    fish.push(fish0);
+    fish[6] += fish0;
   }
 
-  return fish.length;
+  return fish.reduce((acc, curr) => acc + curr, 0);
 };
 
-console.log(part1(final));
+console.log(part2(test));
